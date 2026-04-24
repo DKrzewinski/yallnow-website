@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Damian Krzewinski — Senior Systems Administrator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #070b0f;
+      --bg2:       #0c1118;
+      --bg3:       #111820;
+      --bg4:       #161e28;
+      --border:    #1a2433;
+      --border2:   #243040;
+      --cyan:      #00e5c8;
+      --blue:      #2196f3;
+      --orange:    #ff6d3b;
+      --yellow:    #f5c542;
+      --text:      #b8c8d8;
+      --text-dim:  #4a5a6a;
+      --text-hi:   #e8f2ff;
+      --mono:      'JetBrains Mono', monospace;
+      --sans:      'Outfit', sans-serif;
+      --glow-c:    rgba(0,229,200,0.12);
+      --glow-b:    rgba(33,150,243,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,229,200,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,200,0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      pointer-events: none; z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: -200px; left: 50%; transform: translateX(-50%);
+      width: 800px; height: 500px;
+      background: radial-gradient(ellipse, rgba(0,229,200,0.05) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; width: 100%;
+      z-index: 200;
+      background: rgba(7,11,15,0.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      height: 52px;
+      display: flex; align-items: center;
+      padding: 0 3rem;
+      gap: 2rem;
+    }
+
+    .nav-brand {
+      font-family: var(--sans);
+      font-weight: 800; font-size: 15px;
+      color: var(--text-hi);
+      letter-spacing: -0.01em; white-space: nowrap;
+    }
+
+    .nav-brand em { font-style: normal; color: var(--cyan); }
+
+    .nav-domain {
+      font-size: 11px; color: var(--text-dim);
+      border-left: 1px solid var(--border2);
+      padding-left: 1rem;
+    }
+
+    nav ul { list-style: none; display: flex; gap: 1.8rem; margin-left: auto; }
+
+    nav a {
+      text-decoration: none; font-size: 11px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-dim); transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--cyan); }
+
+    .nav-badge {
+      margin-left: 1.5rem;
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 10px; color: var(--text-dim);
+      padding: 0.3rem 0.7rem;
+      border: 1px solid var(--border2);
+      border-radius: 20px; white-space: nowrap;
+    }
+
+    .nav-badge .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--yellow);
+      box-shadow: 0 0 6px var(--yellow);
+      animation: blink 3s ease-in-out infinite;
+    }
+
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    /* WRAPPER */
+    .wrap {
+      position: relative; z-index: 2;
+      max-width: 1140px; margin: 0 auto; padding: 0 2.5rem;
+    }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh; padding-top: 52px;
+      display: flex; align-items: center;
+    }
+
+    .hero-grid {
+      display: grid; grid-template-columns: 1fr 380px;
+      gap: 4rem; align-items: center; padding: 4rem 0;
+    }
+
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: 0.7rem;
+      font-size: 10px; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--cyan);
+      margin-bottom: 1.4rem;
+    }
+
+    .hero-eyebrow::before {
+      content: ''; display: block; width: 28px; height: 1px; background: var(--cyan);
+    }
+
+    h1 {
+      font-family: var(--sans);
+      font-size: clamp(2.6rem, 5vw, 4.2rem);
+      font-weight: 900; color: var(--text-hi);
+      line-height: 1.05; letter-spacing: -0.03em;
+      margin-bottom: 0.4rem;
+    }
+
+    h1 .last { color: var(--cyan); }
+
+    .hero-title {
+      font-family: var(--mono); font-size: 12px;
+      color: var(--text-dim); letter-spacing: 0.1em;
+      margin-bottom: 1.6rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+
+    .hero-title::before { content: '//'; color: var(--cyan); }
+
+    .hero-desc {
+      font-size: 13px; line-height: 1.9;
+      color: var(--text); max-width: 520px; margin-bottom: 2.4rem;
+    }
+
+    .hero-stats {
+      display: flex; gap: 2.5rem; margin-bottom: 2.4rem;
+      padding: 1.4rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stat-num {
+      font-family: var(--sans); font-size: 1.8rem;
+      font-weight: 800; color: var(--cyan); line-height: 1;
+    }
+
+    .stat-lbl {
+      font-size: 10px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text-dim); margin-top: 0.2rem;
+    }
+
+    .hero-btns { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.6rem 1.3rem; font-family: var(--mono);
+      font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; text-decoration: none;
+      border-radius: 3px; cursor: pointer; transition: all 0.2s;
+    }
+
+    .btn-primary { background: var(--cyan); color: #000; border: 1px solid var(--cyan); }
+    .btn-primary:hover { background: transparent; color: var(--cyan); box-shadow: 0 0 24px var(--glow-c); }
+    .btn-ghost { background: transparent; color: var(--text-dim); border: 1px solid var(--border2); }
+    .btn-ghost:hover { color: var(--blue); border-color: var(--blue); box-shadow: 0 0 20px var(--glow-b); }
+
+    /* PROFILE CARD */
+    .profile-card {
+      background: var(--bg2); border: 1px solid var(--border2);
+      border-radius: 12px; overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,229,200,0.04);
+    }
+
+    .profile-header {
+      background: linear-gradient(135deg, #0d1922 0%, #0a1520 100%);
+      padding: 1.8rem; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 1rem;
+    }
+
+    .avatar-ring {
+      width: 64px; height: 64px; border-radius: 50%;
+      border: 2px solid var(--cyan);
+      box-shadow: 0 0 20px rgba(0,229,200,0.3);
+      background: var(--bg3);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--sans); font-size: 1.4rem;
+      font-weight: 800; color: var(--cyan); flex-shrink: 0;
+    }
+
+    .profile-name { font-family: var(--sans); font-size: 1rem; font-weight: 700; color: var(--text-hi); }
+    .profile-role { font-size: 10px; color: var(--text-dim); margin-top: 0.2rem; }
+    .profile-body { padding: 1.4rem; }
+
+    .prow {
+      display: flex; justify-content: space-between;
+      padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 11px;
+    }
+
+    .prow:last-child { border-bottom: none; }
+    .prow .key { color: var(--text-dim); }
+    .prow .val { color: var(--text-hi); font-weight: 600; text-align: right; }
+    .prow .val.cyan { color: var(--cyan); }
+    .prow .val.green { color: #4caf50; }
+
+    .cert-row { margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+    .cert-badge {
+      font-size: 10px; padding: 0.3rem 0.6rem; border-radius: 3px;
+      border: 1px solid rgba(0,229,200,0.25);
+      background: rgba(0,229,200,0.06); color: var(--cyan); letter-spacing: 0.05em;
+    }
+
+    .lang-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.7rem; }
+    .lang-name { font-size: 11px; color: var(--text); width: 70px; flex-shrink: 0; }
+    .lang-bar { flex: 1; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .lang-fill { height: 100%; background: linear-gradient(90deg, var(--cyan), var(--blue)); border-radius: 2px; }
+    .lang-level { font-size: 10px; color: var(--text-dim); width: 60px; text-align: right; flex-shrink: 0; }
+
+    /* SECTIONS */
+    section { padding: 6rem 0; }
+
+    .sec-eyebrow {
+      font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 0.5rem;
+      display: flex; align-items: center; gap: 0.7rem;
+    }
+
+    .sec-eyebrow::after { content: ''; display: block; width: 50px; height: 1px; background: var(--border2); }
+
+    h2 {
+      font-family: var(--sans); font-size: clamp(1.7rem, 3vw, 2.4rem);
+      font-weight: 800; color: var(--text-hi); letter-spacing: -0.025em; margin-bottom: 0.5rem;
+    }
+
+    .sec-sub { font-size: 12px; color: var(--text-dim); margin-bottom: 3rem; }
+
+    /* SKILLS */
+    #skills { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+
+    .skill-card {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 8px; padding: 1.3rem;
+      transition: border-color 0.25s, transform 0.25s;
+      position: relative; overflow: hidden;
+    }
+
+    .skill-card::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--blue));
+      transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+    }
+
+    .skill-card:hover { border-color: rgba(0,229,200,0.3); transform: translateY(-3px); }
+    .skill-card:hover::after { transform: scaleX(1); }
+
+    .sk-cat { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cyan); margin-bottom: 0.5rem; }
+    .sk-title { font-family: var(--sans); font-size: 0.95rem; font-weight: 700; color: var(--text-hi); margin-bottom: 0.8rem; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+    .tag {
+      font-size: 10px; padding: 0.2rem 0.5rem; border-radius: 2px;
+      background: rgba(255,255,255,0.04); color: var(--text);
+      border: 1px solid var(--border2); letter-spacing: 0.03em;
+    }
+
+    .tag.hi { background: rgba(0,229,200,0.07); color: var(--cyan); border-color: rgba(0,229,200,0.2); }
+
+    /* TIMELINE */
+    #experience {}
+
+    .timeline { position: relative; padding-left: 2.2rem; }
+
+    .timeline::before {
+      content: ''; position: absolute; left: 3px; top: 6px; bottom: 0;
+      width: 1px; background: linear-gradient(to bottom, var(--cyan), transparent 90%);
+    }
+
+    .tl-item { position: relative; padding-bottom: 3.5rem; }
+    .tl-item:last-child { padding-bottom: 0; }
+
+    .tl-dot {
+      position: absolute; left: -2.25rem; top: 5px;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--bg); border: 2px solid var(--cyan);
+      box-shadow: 0 0 12px rgba(0,229,200,0.5);
+    }
+
+    .tl-dot.past { border-color: var(--border2); box-shadow: none; }
+
+    .tl-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.3rem;
+    }
+
+    .tl-company { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.2rem; }
+    .tl-location { font-size: 10px; color: var(--text-dim); }
+
+    .tl-dates {
+      font-size: 10px; color: var(--text-dim);
+      background: var(--bg3); border: 1px solid var(--border);
+      padding: 0.2rem 0.6rem; border-radius: 2px; white-space: nowrap;
+    }
+
+    .tl-dates.current {
+      color: var(--cyan); border-color: rgba(0,229,200,0.25);
+      background: rgba(0,229,200,0.05);
+    }
+
+    .tl-role { font-family: var(--sans); font-size: 1.1rem; font-weight: 700; color: var(--text-hi); margin-bottom: 0.8rem; }
+
+    .tl-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+
+    .tl-bullets li {
+      font-size: 12px; color: var(--text); line-height: 1.7;
+      padding-left: 1.2rem; position: relative;
+    }
+
+    .tl-bullets li::before {
+      content: '▸'; position: absolute; left: 0;
+      color: var(--cyan); font-size: 10px; top: 2px;
+    }
+
+    .tl-divider { height: 1px; background: var(--border); margin: 0 0 3.5rem -2.2rem; }
+
+    /* EDUCATION */
+    #education { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+
+    .edu-card {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 8px; padding: 1.4rem;
+      display: flex; gap: 1rem;
+    }
+
+    .edu-icon {
+      width: 44px; height: 44px; border-radius: 6px;
+      background: rgba(0,229,200,0.07); border: 1px solid rgba(0,229,200,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0;
+    }
+
+    .edu-deg { font-family: var(--sans); font-size: 0.9rem; font-weight: 700; color: var(--text-hi); margin-bottom: 0.2rem; }
+    .edu-uni { font-size: 11px; color: var(--blue); margin-bottom: 0.3rem; }
+    .edu-dates { font-size: 10px; color: var(--text-dim); }
+
+    .cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
+
+    .cert-card {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 8px; padding: 1.2rem;
+      display: flex; align-items: center; gap: 0.9rem;
+    }
+
+    .cert-icon {
+      width: 38px; height: 38px; border-radius: 6px;
+      background: rgba(33,150,243,0.08); border: 1px solid rgba(33,150,243,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+
+    .cert-name { font-family: var(--sans); font-size: 0.85rem; font-weight: 700; color: var(--text-hi); }
+    .cert-issuer { font-size: 10px; color: var(--text-dim); margin-top: 0.15rem; }
+
+    /* CONTACT */
+    .contact-intro { max-width: 540px; font-size: 13px; color: var(--text); line-height: 1.8; margin-bottom: 2.5rem; }
+
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+
+    .contact-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 1.3rem;
+      display: flex; align-items: center; gap: 0.9rem;
+      text-decoration: none; transition: all 0.2s;
+    }
+
+    .contact-card:hover { border-color: rgba(0,229,200,0.3); background: rgba(0,229,200,0.03); transform: translateY(-2px); }
+
+    .cc-icon {
+      width: 40px; height: 40px; border-radius: 6px;
+      background: var(--bg3); border: 1px solid var(--border2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+
+    .cc-label { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.2rem; }
+    .cc-value { font-size: 12px; font-weight: 600; color: var(--text-hi); }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 2rem 0; position: relative; z-index: 2; }
+
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-size: 11px; color: var(--text-dim); }
+    .footer-copy span { color: var(--cyan); }
+    .footer-domain { font-size: 11px; color: var(--text-dim); }
+
+    /* FADE IN */
+    .fi { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .fi.vis { opacity: 1; transform: translateY(0); }
+    .fi[data-d="1"] { transition-delay: 0.1s; }
+    .fi[data-d="2"] { transition-delay: 0.2s; }
+    .fi[data-d="3"] { transition-delay: 0.3s; }
+
+    /* RESPONSIVE */
+    @media(max-width:860px){
+      .hero-grid { grid-template-columns: 1fr; }
+      .profile-card { display: none; }
+      .edu-grid { grid-template-columns: 1fr; }
+      nav ul { display: none; }
+      .nav-badge { display: none; }
+      .hero-stats { gap: 1.5rem; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">Damian <em>Krzewinski</em></div>
+  <div class="nav-domain">yallnow.com</div>
+  <ul>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-badge">
+    <div class="dot"></div>
+    Open to opportunities
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-eyebrow">Senior Systems Administrator</div>
+        <h1>Damian<br><span class="last">Krzewinski</span></h1>
+        <div class="hero-title">IT Team Leader · Azure Specialist · Automation Engineer</div>
+        <p class="hero-desc">
+          Results-driven IT professional with 10+ years of experience across hybrid cloud infrastructure, identity management, and team leadership. Specialising in Azure, Okta, Intune, and PowerShell automation — with a proven track record of measurable security and operational improvements across UK and US enterprise environments.
+        </p>
+        <div class="hero-stats">
+          <div>
+            <div class="stat-num">10+</div>
+            <div class="stat-lbl">Years in IT</div>
+          </div>
+          <div>
+            <div class="stat-num">£100k+</div>
+            <div class="stat-lbl">Cloud savings found</div>
+          </div>
+          <div>
+            <div class="stat-num">96%</div>
+            <div class="stat-lbl">Azure security score</div>
+          </div>
+          <div>
+            <div class="stat-num">MSc</div>
+            <div class="stat-lbl">Computer Science</div>
+          </div>
+        </div>
+        <div class="hero-btns">
+          <a href="#contact" class="btn btn-primary">Get in touch</a>
+          <a href="#experience" class="btn btn-ghost">View timeline →</a>
+          <a href="https://www.linkedin.com/in/damian-krzewinski-33388771/" target="_blank" class="btn btn-ghost">LinkedIn ↗</a>
+        </div>
+      </div>
+
+      <div class="profile-card fi" data-d="2">
+        <div class="profile-header">
+          <div class="avatar-ring">DK</div>
+          <div>
+            <div class="profile-name">Damian Krzewinski</div>
+            <div class="profile-role">Sr. SysAdmin @ Huge</div>
+          </div>
+        </div>
+        <div class="profile-body">
+          <div class="prow"><span class="key">Location</span><span class="val">Chorley, UK</span></div>
+          <div class="prow"><span class="key">Current role</span><span class="val cyan">Sr. SysAdmin @ Huge</span></div>
+          <div class="prow"><span class="key">Industry</span><span class="val">Digital Agency</span></div>
+          <div class="prow"><span class="key">Status</span><span class="val" style="color:var(--yellow)">Open to roles</span></div>
+          <div class="prow"><span class="key">Azure score</span><span class="val green">73% → 96% ↑</span></div>
+          <div class="prow"><span class="key">Intune compliance</span><span class="val green">51% → 89% ↑</span></div>
+          <div class="prow"><span class="key">Domain</span><span class="val cyan">yallnow.com</span></div>
+          <div class="cert-row">
+            <span class="cert-badge">AZ-900</span>
+            <span class="cert-badge">Jamf Certified</span>
+            <span class="cert-badge">ITIL</span>
+          </div>
+          <div style="margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--border)">
+            <div style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-dim);margin-bottom:.7rem">Languages</div>
+            <div class="lang-row"><span class="lang-name">English</span><div class="lang-bar"><div class="lang-fill" style="width:100%"></div></div><span class="lang-level">Native</span></div>
+            <div class="lang-row"><span class="lang-name">Polish</span><div class="lang-bar"><div class="lang-fill" style="width:100%"></div></div><span class="lang-level">Native</span></div>
+            <div class="lang-row"><span class="lang-name">Spanish</span><div class="lang-bar"><div class="lang-fill" style="width:20%"></div></div><span class="lang-level">Beginner</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-eyebrow">02 — Technical Skills</div>
+    <h2>Stack & Specialisms</h2>
+    <p class="sec-sub">Core technologies across 10+ years of enterprise IT.</p>
+    <div class="skills-grid">
+      <div class="skill-card fi" data-d="1">
+        <div class="sk-cat">Cloud & Identity</div>
+        <div class="sk-title">Azure & Modern Identity</div>
+        <div class="tags">
+          <span class="tag hi">Microsoft Azure</span><span class="tag hi">Azure Entra ID</span>
+          <span class="tag hi">Okta IDP</span><span class="tag hi">Okta FastPass</span>
+          <span class="tag">Windows Hello for Business</span><span class="tag">Passwordless Auth</span>
+          <span class="tag">MFA / SSO</span><span class="tag">AZ-900</span>
+        </div>
+      </div>
+      <div class="skill-card fi" data-d="1">
+        <div class="sk-cat">Endpoint & MDM</div>
+        <div class="sk-title">Device Management</div>
+        <div class="tags">
+          <span class="tag hi">Microsoft Intune</span><span class="tag hi">Windows Autopilot</span>
+          <span class="tag hi">Jamf</span><span class="tag">GPO Management</span>
+          <span class="tag">Compliance Policies</span><span class="tag">MDE / Defender</span>
+          <span class="tag">OOBE Deployment</span>
+        </div>
+      </div>
+      <div class="skill-card fi" data-d="2">
+        <div class="sk-cat">Infrastructure</div>
+        <div class="sk-title">Hybrid & On-Prem</div>
+        <div class="tags">
+          <span class="tag hi">Windows Server</span><span class="tag hi">Active Directory</span>
+          <span class="tag hi">Hyper-V</span><span class="tag">NAS</span>
+          <span class="tag">LAN / WAN</span><span class="tag">VPN</span>
+          <span class="tag">DNS / DHCP</span><span class="tag">TCP/IP</span>
+        </div>
+      </div>
+      <div class="skill-card fi" data-d="2">
+        <div class="sk-cat">Automation & Scripting</div>
+        <div class="sk-title">PowerShell & Scripting</div>
+        <div class="tags">
+          <span class="tag hi">PowerShell</span><span class="tag">Bash</span>
+          <span class="tag">Offboarding Automation</span><span class="tag">Lifecycle Scripts</span>
+          <span class="tag">Docker</span><span class="tag">Linux</span>
+        </div>
+      </div>
+      <div class="skill-card fi" data-d="3">
+        <div class="sk-cat">Backup & DR</div>
+        <div class="sk-title">Resilience & Recovery</div>
+        <div class="tags">
+          <span class="tag hi">Veeam</span><span class="tag">Azure Backup</span>
+          <span class="tag">Multi-level DR</span><span class="tag">Cloud Migration</span>
+          <span class="tag">AWS</span>
+        </div>
+      </div>
+      <div class="skill-card fi" data-d="3">
+        <div class="sk-cat">Comms & ITSM</div>
+        <div class="sk-title">Collaboration & Service Mgmt</div>
+        <div class="tags">
+          <span class="tag hi">Office 365</span><span class="tag">Jira</span>
+          <span class="tag">Confluence</span><span class="tag">ITIL</span>
+          <span class="tag">VOIP / PBX</span><span class="tag">FreePBX / Asterisk</span>
+          <span class="tag">SNOM</span>
+        </div>
+      </div>
+      <div class="skill-card fi" data-d="3">
+        <div class="sk-cat">Security</div>
+        <div class="sk-title">Security & Compliance</div>
+        <div class="tags">
+          <span class="tag hi">Security Audits</span><span class="tag hi">Pentest Management</span>
+          <span class="tag">Phishing Campaigns</span><span class="tag">Patch Management</span>
+          <span class="tag">System Monitoring</span><span class="tag">Zero Trust</span>
+        </div>
+      </div>
+      <div class="skill-card fi" data-d="3">
+        <div class="sk-cat">Leadership</div>
+        <div class="sk-title">Team & Project Management</div>
+        <div class="tags">
+          <span class="tag hi">IT Team Leadership</span><span class="tag">Project Management</span>
+          <span class="tag">SLA / KPI Management</span><span class="tag">Supplier Relations</span>
+          <span class="tag">Strategic Planning</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-eyebrow">03 — Experience</div>
+    <h2>Career Timeline</h2>
+    <p class="sec-sub">10+ years across UK and US enterprise environments.</p>
+
+    <div class="timeline">
+
+      <div class="tl-item fi">
+        <div class="tl-dot"></div>
+        <div class="tl-header">
+          <div>
+            <div class="tl-company">Huge (formerly Hero Digital) · Digital Agency</div>
+            <div class="tl-location">📍 Fort Worth, TX → Chorley, UK</div>
+          </div>
+          <div class="tl-dates current">May 2024 — Present</div>
+        </div>
+        <div class="tl-role">Senior Systems Administrator</div>
+        <ul class="tl-bullets">
+          <li>Hired by Hero Digital in the US pre-acquisition. Supported the transition into the Huge brand before relocating back to the UK in September 2025.</li>
+          <li>Overseeing identity, endpoint management, cloud services, and IT operations for a fast-paced creative and technology environment.</li>
+          <li>Driving security improvements and maintaining operational continuity for a distributed workforce post-merger.</li>
+        </ul>
+      </div>
+      <div class="tl-divider"></div>
+
+      <div class="tl-item fi" data-d="1">
+        <div class="tl-dot past"></div>
+        <div class="tl-header">
+          <div>
+            <div class="tl-company">Vari · Workspace Innovation</div>
+            <div class="tl-location">📍 Coppell, Texas — USA</div>
+          </div>
+          <div class="tl-dates">Jun 2022 — Jan 2024</div>
+        </div>
+        <div class="tl-role">Senior Systems Administrator</div>
+        <ul class="tl-bullets">
+          <li>Performed cloud infrastructure analysis identifying potential annual savings of over <strong style="color:var(--cyan)">$100,000</strong>.</li>
+          <li>Improved Intune hardware policy compliance from <strong style="color:var(--orange)">51%</strong> to <strong style="color:#4caf50">89%</strong> through new compliance policies and targeted device remediation.</li>
+          <li>Raised Azure Security score for Identity Management from <strong style="color:var(--orange)">73%</strong> to <strong style="color:#4caf50">96%</strong>.</li>
+          <li>Led hybrid-to-cloud transition converting 95% of on-prem GPOs and app deployments into Intune Configuration Profiles.</li>
+          <li>Spearheaded company-wide passwordless authentication using Windows Hello for Business, Okta FastPass, and a full Okta policy overhaul.</li>
+          <li>Developed mission-critical PowerShell automations including a 500+ line automated offboarding script, post-offboarding archival after 30 days, and local admin management scripts.</li>
+          <li>Built Windows Autopilot with OOBE enabling direct supplier-to-employee laptop shipping — drastically reducing service desk onboarding overhead.</li>
+          <li>Maintained and supported on-site systems across multiple international locations (United States, Taiwan).</li>
+        </ul>
+      </div>
+      <div class="tl-divider"></div>
+
+      <div class="tl-item fi" data-d="1">
+        <div class="tl-dot past"></div>
+        <div class="tl-header">
+          <div>
+            <div class="tl-company">FI Real Estate Management · Property & Facilities</div>
+            <div class="tl-location">📍 Chorley, Lancashire — UK</div>
+          </div>
+          <div class="tl-dates">Jan 2018 — Nov 2021</div>
+        </div>
+        <div class="tl-role">IT Team Leader</div>
+        <ul class="tl-bullets">
+          <li>Performed and delivered quarterly IT security audits required by sub-company Solutus (a regulated financial institution).</li>
+          <li>Implemented a multi-level DR solution combining on-site Veeam with Azure Backup for full cloud replication.</li>
+          <li>Orchestrated and managed multiple penetration tests, phishing simulation campaigns, and group-wide security audits.</li>
+          <li>Became the sole escalation point for the entire group, handling 100% of escalated issues across all companies.</li>
+          <li>Managed a high-performing IT team supporting multiple companies and technologies whilst ensuring all SLAs and KPIs were consistently met.</li>
+          <li>Served as the CEO's primary point of contact for all IT strategy and operational matters.</li>
+          <li>Led the team through the Covid-19 pandemic and UK lockdowns, maintaining business continuity and team development goals throughout.</li>
+        </ul>
+      </div>
+      <div class="tl-divider"></div>
+
+      <div class="tl-item fi" data-d="2">
+        <div class="tl-dot past"></div>
+        <div class="tl-header">
+          <div>
+            <div class="tl-company">FI Real Estate Management · Property & Facilities</div>
+            <div class="tl-location">📍 Chorley, Lancashire — UK</div>
+          </div>
+          <div class="tl-dates">Nov 2016 — Dec 2017</div>
+        </div>
+        <div class="tl-role">IT Infrastructure Analyst</div>
+        <ul class="tl-bullets">
+          <li>Reduced the service desk queue from <strong style="color:var(--orange)">1,000+ tickets</strong> down to <strong style="color:#4caf50">below 20</strong> through systematic triage and process improvement.</li>
+          <li>Conducted infrastructure and network surveys that became the foundation for a major infrastructure overhaul.</li>
+          <li>Deployed multiple Hyper-V hypervisors hosting up to 16 VMs each, replacing ageing physical servers and dramatically improving network reliability.</li>
+          <li>Upgraded comms room infrastructure — replaced switches and routers, rewired patch panels, and implemented multi-site Wi-Fi solutions.</li>
+          <li>Transitioned legacy phone system to a network-hosted FreePBX / Asterisk on-premises telephony platform.</li>
+        </ul>
+      </div>
+      <div class="tl-divider"></div>
+
+      <div class="tl-item fi" data-d="3">
+        <div class="tl-dot past"></div>
+        <div class="tl-header">
+          <div>
+            <div class="tl-company">Coral Island · Family Entertainment</div>
+            <div class="tl-location">📍 Blackpool, Lancashire — UK</div>
+          </div>
+          <div class="tl-dates">May 2014 — Oct 2016</div>
+        </div>
+        <div class="tl-role">IT Support</div>
+        <ul class="tl-bullets">
+          <li>First port of call for all system and physical IT issues across one of Blackpool's largest visitor attractions.</li>
+          <li>Maintained uptime and rapid response across business-critical point-of-sale and operational systems in a high-footfall environment.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="wrap">
+    <div class="sec-eyebrow">04 — Education & Certifications</div>
+    <h2>Qualifications</h2>
+
+    <div class="edu-grid fi">
+      <div class="edu-card">
+        <div class="edu-icon">🎓</div>
+        <div>
+          <div class="edu-deg">Master's — Computer Science</div>
+          <div class="edu-uni">West Pomeranian University of Technology, Szczecin</div>
+          <div class="edu-dates">2009 – 2012</div>
+        </div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-icon">📘</div>
+        <div>
+          <div class="edu-deg">Bachelor's — Computer Science</div>
+          <div class="edu-uni">West Pomeranian University of Technology, Szczecin</div>
+          <div class="edu-dates">2006 – 2009</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cert-grid fi" data-d="1">
+      <div class="cert-card">
+        <div class="cert-icon">☁️</div>
+        <div>
+          <div class="cert-name">AZ-900</div>
+          <div class="cert-issuer">Microsoft Azure Fundamentals</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">🍎</div>
+        <div>
+          <div class="cert-name">Jamf Certified Associate</div>
+          <div class="cert-issuer">Apple Device Management</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">📋</div>
+        <div>
+          <div class="cert-name">ITIL Framework</div>
+          <div class="cert-issuer">IT Service Management</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-eyebrow">05 — Contact</div>
+    <h2>Get In Touch</h2>
+    <p class="contact-intro">
+      I'm not actively hunting for a new role but I'm always happy to talk — whether that's a compelling opportunity, a tricky infrastructure challenge, or a conversation about IT strategy.
+    </p>
+    <div class="contact-grid fi">
+      <a href="https://www.linkedin.com/in/damian-krzewinski/" target="_blank" class="contact-card">
+        <div class="cc-icon">💼</div>
+        <div><div class="cc-label">LinkedIn</div><div class="cc-value">/in/damian-krzewinski</div></div>
+      </a>
+      <a href="mailto:dkrzewinski@gmail.com" class="contact-card">
+        <div class="cc-icon">✉️</div>
+        <div><div class="cc-label">Email</div><div class="cc-value">dkrzewinski@gmail.com</div></div>
+      </a>
+      <a href="tel:+447754193972" class="contact-card">
+        <div class="cc-icon">📞</div>
+        <div><div class="cc-label">Phone</div><div class="cc-value">(+44) 7754193972</div></div>
+      </a>
+      <a href="https://yallnow.com" class="contact-card">
+        <div class="cc-icon">🌐</div>
+        <div><div class="cc-label">Website</div><div class="cc-value">yallnow.com</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-copy">© 2025 <span>Damian Krzewinski</span> · Senior Systems Administrator · Chorley, UK</div>
+      <div class="footer-domain"><span style="color:var(--text-dim)">self-hosted at </span><span style="color:var(--cyan)">yallnow.com</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+
+  // Hero card animates in on load
+  setTimeout(() => {
+    document.querySelectorAll('#hero .fi').forEach(el => el.classList.add('vis'));
+  }, 400);
+</script>
+</body>
+</html>
