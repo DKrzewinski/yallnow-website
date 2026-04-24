@@ -4,7 +4,15 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Damian Krzewinski — Senior Systems Administrator</title>
+  <meta name="description" content="Senior Systems Administrator with 10+ years across Azure, Okta, Intune and hybrid cloud infrastructure. Based in Chorley, UK.">
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="Damian Krzewinski — Senior Systems Administrator">
+  <meta property="og:description" content="Senior Systems Administrator with 10+ years across Azure, Okta, Intune and hybrid cloud infrastructure. Based in Chorley, UK.">
+  <meta property="og:url" content="https://yallnow.com">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23070b0f'/><text x='16' y='22' text-anchor='middle' font-family='Arial' font-weight='bold' font-size='14' fill='%2300e5c8'>DK</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -114,6 +122,60 @@
     }
 
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    /* HAMBURGER */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      margin-left: auto;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* MOBILE MENU */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 52px; left: 0; right: 0;
+      background: rgba(7,11,15,0.98);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      z-index: 199;
+    }
+
+    .mobile-menu.open { display: block; }
+
+    .mobile-menu ul { list-style: none; }
+
+    .mobile-menu ul li a {
+      display: block;
+      padding: 1rem 3rem;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .mobile-menu ul li a:hover { color: var(--cyan); background: rgba(0,229,200,0.03); }
 
     /* WRAPPER */
     .wrap {
@@ -446,8 +508,11 @@
       .edu-grid { grid-template-columns: 1fr; }
       nav ul { display: none; }
       .nav-badge { display: none; }
+      .hamburger { display: flex; }
       .hero-stats { gap: 1.5rem; }
       .footer-inner { flex-direction: column; align-items: flex-start; }
+      nav { padding: 0 1.5rem; }
+      .wrap { padding: 0 1.5rem; }
     }
   </style>
 </head>
@@ -464,9 +529,21 @@
   </ul>
   <div class="nav-badge">
     <div class="dot"></div>
-    Open to opportunities
+    Open to the right role
   </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <ul>
+    <li><a href="#skills" class="mob-link">Skills</a></li>
+    <li><a href="#experience" class="mob-link">Experience</a></li>
+    <li><a href="#education" class="mob-link">Education</a></li>
+    <li><a href="#contact" class="mob-link">Contact</a></li>
+  </ul>
+</div>
 
 <!-- HERO -->
 <section id="hero">
@@ -485,7 +562,7 @@
             <div class="stat-lbl">Years in IT</div>
           </div>
           <div>
-            <div class="stat-num">£100k+</div>
+            <div class="stat-num">$100k+</div>
             <div class="stat-lbl">Cloud savings found</div>
           </div>
           <div>
@@ -500,7 +577,7 @@
         <div class="hero-btns">
           <a href="#contact" class="btn btn-primary">Get in touch</a>
           <a href="#experience" class="btn btn-ghost">View timeline →</a>
-          <a href="https://www.linkedin.com/in/damian-krzewinski-33388771/" target="_blank" class="btn btn-ghost">LinkedIn ↗</a>
+          <a href="https://www.linkedin.com/in/damian-krzewinski/" target="_blank" class="btn btn-ghost">LinkedIn ↗</a>
         </div>
       </div>
 
@@ -516,7 +593,7 @@
           <div class="prow"><span class="key">Location</span><span class="val">Chorley, UK</span></div>
           <div class="prow"><span class="key">Current role</span><span class="val cyan">Sr. SysAdmin @ Huge</span></div>
           <div class="prow"><span class="key">Industry</span><span class="val">Digital Agency</span></div>
-          <div class="prow"><span class="key">Status</span><span class="val" style="color:var(--yellow)">Open to roles</span></div>
+          <div class="prow"><span class="key">Status</span><span class="val" style="color:var(--yellow)">Open to the right role</span></div>
           <div class="prow"><span class="key">Azure score</span><span class="val green">73% → 96% ↑</span></div>
           <div class="prow"><span class="key">Intune compliance</span><span class="val green">51% → 89% ↑</span></div>
           <div class="prow"><span class="key">Domain</span><span class="val cyan">yallnow.com</span></div>
@@ -541,7 +618,7 @@
 <!-- SKILLS -->
 <section id="skills">
   <div class="wrap">
-    <div class="sec-eyebrow">02 — Technical Skills</div>
+    <div class="sec-eyebrow">01 — Technical Skills</div>
     <h2>Stack & Specialisms</h2>
     <p class="sec-sub">Core technologies across 10+ years of enterprise IT.</p>
     <div class="skills-grid">
@@ -628,7 +705,7 @@
 <!-- EXPERIENCE -->
 <section id="experience">
   <div class="wrap">
-    <div class="sec-eyebrow">03 — Experience</div>
+    <div class="sec-eyebrow">02 — Experience</div>
     <h2>Career Timeline</h2>
     <p class="sec-sub">10+ years across UK and US enterprise environments.</p>
 
@@ -740,7 +817,7 @@
 <!-- EDUCATION -->
 <section id="education">
   <div class="wrap">
-    <div class="sec-eyebrow">04 — Education & Certifications</div>
+    <div class="sec-eyebrow">03 — Education & Certifications</div>
     <h2>Qualifications</h2>
 
     <div class="edu-grid fi">
@@ -791,10 +868,10 @@
 <!-- CONTACT -->
 <section id="contact">
   <div class="wrap">
-    <div class="sec-eyebrow">05 — Contact</div>
+    <div class="sec-eyebrow">04 — Contact</div>
     <h2>Get In Touch</h2>
     <p class="contact-intro">
-      I'm not actively hunting for a new role but I'm always happy to talk — whether that's a compelling opportunity, a tricky infrastructure challenge, or a conversation about IT strategy.
+      I'm not actively looking for a new role, but I'm always open to the right opportunity — whether that's a compelling challenge, a step up, or something I haven't considered yet. Happy to talk.
     </p>
     <div class="contact-grid fi">
       <a href="https://www.linkedin.com/in/damian-krzewinski/" target="_blank" class="contact-card">
@@ -820,7 +897,7 @@
 <footer>
   <div class="wrap">
     <div class="footer-inner">
-      <div class="footer-copy">© 2025 <span>Damian Krzewinski</span> · Senior Systems Administrator · Chorley, UK</div>
+      <div class="footer-copy">© 2026 <span>Damian Krzewinski</span> · Senior Systems Administrator · Chorley, UK</div>
       <div class="footer-domain"><span style="color:var(--text-dim)">self-hosted at </span><span style="color:var(--cyan)">yallnow.com</span></div>
     </div>
   </div>
@@ -839,6 +916,22 @@
   setTimeout(() => {
     document.querySelectorAll('#hero .fi').forEach(el => el.classList.add('vis'));
   }, 400);
+
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+
+  document.querySelectorAll('.mob-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    });
+  });
 </script>
 </body>
 </html>
